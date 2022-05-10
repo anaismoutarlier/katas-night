@@ -1,0 +1,41 @@
+import React from 'react'
+
+import winner_badge from "./winner_badge.svg"
+
+export default function Team({ team, data, winners, isWinner, gameOngoing }) {
+  console.log({ team: team.team })
+  const winner = winners.find(el => el.team === team.team) 
+  const won = isWinner && isWinner.team === team.team
+  const isCheater = data["CHEATERS"].find(el  => el.team === team.team)
+  const isLeader = data.leading.find(el => el.team === team.team)
+  const isRecent = data.recent.find(el => el.team === team.team)
+  
+  if (team.team === "Les Yesdemon") console.log({ winner, won })
+  let status = ""
+  if (isRecent && gameOngoing) status = " recent"
+  if (isLeader) status = " leader"
+  if (winner) status = " winner"
+  if (won) status = " winner new"
+  if (isCheater) status = " cheater"
+
+  console.log(winners)
+  return (
+    <div className={`team-card${status}`}>
+      { (won || winner) && <img className='winner-badge' src={winner_badge} alt="winner" />}
+      <div>
+        <h4>{ team.team }</h4>
+        <div className='content-container'>
+          {
+            team.students.map(student => <img className="avatar" src={ student.avatar ? `https://ariane.lacapsule.academy/images/avatar/${student._id}.jpg` : `https://ariane.lacapsule.academy/images/avatar/_male-default.jpg` } alt={ student.fullname }/>)
+          }
+        </div>
+      </div>
+      <div>
+        <h5 className='team-count'>{ team.count }</h5>
+      </div>
+      <div>
+        { team.lastExercise.replace(/#[0-9]+\s-\s/, "") }
+      </div>
+    </div>
+  )
+}
