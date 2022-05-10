@@ -18,10 +18,15 @@ export default function Team({ team, data, winners, isWinner, gameOngoing }) {
   if (won) status = " winner new"
   if (isCheater) status = " cheater"
 
-  console.log(winners)
   return (
     <div className={`team-card${status}`}>
-      { (won || winner) && <img className='winner-badge' src={winner_badge} alt="winner" />}
+      { 
+        (won || winner) && 
+        <>
+          <h3 className='winner-banner'>WINNER !</h3>
+          <img className='winner-badge' src={winner_badge} alt="winner" />
+        </>
+      }
       <div>
         <h4>{ team.team }</h4>
         <div className='content-container'>
