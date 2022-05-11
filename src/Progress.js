@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 const Step = ({ index, isActive, isNext, total, width }) => {
   return (
     <div className="progress-wrapper" style={ { width: index < total ? width : "28px" } }>
