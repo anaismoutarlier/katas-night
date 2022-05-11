@@ -6,7 +6,7 @@ export default function Start() {
     const navigate = useNavigate()
 
     const handleClick = async () => {
-        let data = await fetch(`http://localhost:3000/batch/katas/start/${batchId}`, {
+        let data = await fetch(`https://ariane-backend.herokuapp.com/batch/katas/start/${batchId}`, {
             method: "POST",
         })
 

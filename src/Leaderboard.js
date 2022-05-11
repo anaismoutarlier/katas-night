@@ -12,7 +12,7 @@ export default function Leaderboard() {
   const [data, setData] = useState(null)
   const [winners, setWinners] = useState([])
   const [isWinner, setIsWinner] = useState(null)
-  const [timeout, setTimeout] = useState(null)
+  const [endDate, setEndDate] = useState(null)
   const [gameOngoing, setGameOngoing] = useState(null)
   
   const { batchId } = useParams()
@@ -21,6 +21,7 @@ export default function Leaderboard() {
   useEffect(() => {
     let interval;
 
+    let winnersList = [];
     const fetchData = async () => {
       const data = await fetch(`http://localhost:3000/batch/katas/progress/${batchId}`)
       const json = await data.json()
@@ -40,11 +41,16 @@ export default function Leaderboard() {
         
         setData(res)
         setWinners(res.all.filter(team => team.count === res.steps.length))
-
         if (end > now) {
           setGameOngoing(true)
-          setIsWinner(res.leading[0])
-          setTimeout(end)
+          
+          setEndDate(end)
+          
+          if(res.leading.length && res.leading[0].count === res.steps.length && new Date(res.leading[0].updatedAt) < new Date().setMinutes(new Date() - 3) && !winnersList.find(team => team.team === res.leading[0].team)) {
+            setIsWinner(res.leading[0])
+            setTimeout(() => setIsWinner(null), 5000)
+          }
+          winnersList = res.all.filter(team => team.count === res.steps.length)
         } else {
           if (interval) clearInterval(interval)
         }
@@ -52,18 +58,18 @@ export default function Leaderboard() {
     }
 
     fetchData()
-    interval = setInterval(() => fetchData(), 10000)
+    interval = setInterval(() => fetchData(), 7000)
 
     return  () => interval ? clearInterval(interval) : null
   }, [batchId])
 
-  useEffect(() => isWinner && winners.find(team => team.team === isWinner.team) ? setTimeout(() => setIsWinner(null), 5000) : undefined, [winners, isWinner])
-
   const endGame = async () => {
-    await fetch(`http://localhost:3000/batch/katas/end/${batchId}`)
-
+    await fetch(`https://ariane-backend.herokuapp.com/batch/katas/end/${batchId}`, {
+      method: "POST"
+    })
     setGameOngoing(false)
   }
+
   return (
     <div className="container leaderboard">
       {
@@ -74,10 +80,10 @@ export default function Leaderboard() {
             <Progress total={ data.steps.length } currentIndex={ data.maxCount || 0 } width={`calc(100vw - 500px)`} />
             <div className='countdown-wrapper'>
               {
-                gameOngoing &&
-                <Countdown date={ timeout } onStop={endGame} onComplete={endGame} renderer={ ({formatted: { hours, minutes, seconds }}) => <div className='countdown' style={ { color: minutes <= 5 ? "#f94a56": "#f8f9fa" } }>{hours}:{minutes}:{seconds}</div>} />
+                gameOngoing && endDate &&
+                <Countdown date={ endDate } onStop={endGame} onComplete={endGame} renderer={ ({formatted: { hours, minutes, seconds }}) => <div className='countdown' style={ { color: minutes <= 5 ? "#f94a56": "#f8f9fa" } }>{hours}:{minutes}:{seconds}</div>} />
               }
-              <div className={`anchor${gameOngoing === false ? " open" : ""}`}>
+              <div className={`anchor${endDate && gameOngoing === false ? " open" : ""}`}>
                 <div className='alarm'>
                   <img className="alarm-icon" src={ alarm_clock } alt="alarm" />
                   <h1 className='alarm-banner'>STOP CHRONO !</h1>

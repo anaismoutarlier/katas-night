@@ -137,6 +137,12 @@ h4 {
   justify-content: center;
 }
 
+.wrapper {
+  margin: 1em;
+  height: auto;
+  min-height: 100px;
+}
+
 .team-card {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
   padding: 1.2% 1em;
@@ -147,16 +153,16 @@ h4 {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  margin: 1em;
   position: relative;
   left: auto;
   top: auto;
   transition: transform 1s;
   border-radius: 3px;
+  background-color: #f8f9fa;
 }
 
 .team-card.winner {
-  border: 3px solid
+  border: 3px solid #F8B64C;
 }
 
 .team-count {
@@ -205,9 +211,12 @@ h4 {
 }
 
 .team-card.winner.new {
-  transform: scale(4);
+  position: absolute;
+  transform: scale(3);
   left: 45vw;
   top: 30vh;
+  z-index: 100;
+  background-color: #f8f9fa;
 }
 
 .team-card.cheater {
@@ -220,8 +229,12 @@ h4 {
   background-color: rgba(152, 237, 196, 0.3);
 }
 
+.exercise-wrapper {
+  text-align: center;
+}
+
 .anchor {
-  height: 0px;
+  height: 100vh;
   width: 0px;
   position: absolute;
   overflow: hidden;
