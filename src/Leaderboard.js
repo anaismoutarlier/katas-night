@@ -23,7 +23,7 @@ export default function Leaderboard() {
 
     let winnersList = [];
     const fetchData = async () => {
-      const data = await fetch(`http://localhost:3000/batch/katas/progress/${batchId}`)
+      const data = await fetch(`https://ariane-backend.herokuapp.com/batch/katas/progress/${batchId}`)
       const json = await data.json()
 
       const { result, dateStart, dateEnd, ...res } = json
