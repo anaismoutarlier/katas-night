@@ -14,6 +14,13 @@ export default function Team({ team, data, winners, isWinner, gameOngoing }) {
   if (won) status = " winner new"
   if (isCheater) status = " cheater"
 
+  let error;
+  if (isCheater) {
+    console.log(isCheater.count)
+    error = isCheater.skipped.map(step => `${step}, `).join("").split("")
+    error = error.slice(0, error.length - 2)
+    error.join("")
+  }
   return (
     <div className='wrapper'>
       <div className={`team-card${status}`}>
@@ -24,19 +31,24 @@ export default function Team({ team, data, winners, isWinner, gameOngoing }) {
             <img className='winner-badge' src={winner_badge} alt="winner" />
           </>
         }
-        <div>
+        <div className="team-header">
           <h4>{ team.team }</h4>
           <div className='content-container'>
             {
-              team.students.map(student => <img className="avatar" src={ student.avatar ? `https://ariane.lacapsule.academy/images/avatar/${student._id}.jpg` : `https://ariane.lacapsule.academy/images/avatar/_male-default.jpg` } alt={ "" }/>)
+              team.students.map(student => <img className="avatar" key={student._id} alt={student.name} src={ student.avatar ? `https://ariane.lacapsule.academy/images/avatar/${student._id}.jpg` : `https://ariane.lacapsule.academy/images/avatar/_male-default.jpg` }/>)
             }
           </div>
         </div>
         <div>
-          <h5 className='team-count'>{ team.count }</h5>
+          <h5 className='team-count'>{ isCheater ? isCheater.count : team.count }</h5>
         </div>
         <div className='exercise-wrapper'>
-          { team.lastExercise.replace(/#[0-9]+\s-\s/, "") }
+          {
+            isCheater ?
+            <><span style={{ color: '#f94a56' }}><span style={{ fontWeight: 900 }}>ERROR 404:</span> { error }</span></>
+            :
+            team.lastExercise
+          }
         </div>
       </div>
     </div>

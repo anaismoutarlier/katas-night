@@ -17,7 +17,7 @@ export default function Progress({ total, currentIndex, width }) {
     <div style={ { width } } className="progress">
       {
         Array.from({ length: total }, (_, i) => i + 1)
-        .map(step => <Step key={`step-${step}`} index={step} width={`calc(100% / ${total - 2})`} total={ total } currentIndex={ currentIndex } isActive={step <= currentIndex } isNext={ step === currentIndex + 1 } />)
+        .map(step => <Step key={`step-${step}`} index={step} width={`calc(100% / ${total - 2})`} total={ total } currentIndex={ currentIndex } isActive={step <= currentIndex } isNext={ step === currentIndex } />)
       }
     </div>
   )

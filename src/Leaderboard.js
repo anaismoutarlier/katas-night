@@ -7,6 +7,7 @@ import Progress from "./Progress"
 import Campus from './Campus'
 
 import alarm_clock from "./alarm_clock.png"
+import logo from "./Lacapsule-logo-simple.png"
 
 export default function Leaderboard() {
   const [data, setData] = useState(null)
@@ -43,14 +44,19 @@ export default function Leaderboard() {
         setWinners(res.all.filter(team => team.count === res.steps.length))
         if (end > now) {
           setGameOngoing(true)
-          
           setEndDate(end)
           
-          if(res.leading.length && res.leading[0].count === res.steps.length && new Date(res.leading[0].updatedAt) < new Date().setMinutes(new Date() - 3) && !winnersList.find(team => team.team === res.leading[0].team)) {
-            setIsWinner(res.leading[0])
-            setTimeout(() => setIsWinner(null), 5000)
+          if (res.leading.length) {
+            let newWinners = res.leading.filter(team => team.count === res.steps.length && !winnersList.find(el => el.team === team.team))
+
+            if (newWinners.length) console.log(new Date(newWinners[0].updatedAt) > new Date().setMinutes(new Date().getMinutes() - 3))
+            if(newWinners.length && newWinners[0].count === res.steps.length) {
+              setIsWinner(newWinners[0])
+              setTimeout(() => setIsWinner(null), 3000)
+            }
+
+            winnersList = res.leading.filter(team => team.count === res.steps.length)
           }
-          winnersList = res.all.filter(team => team.count === res.steps.length)
         } else {
           if (interval) clearInterval(interval)
         }
@@ -76,7 +82,10 @@ export default function Leaderboard() {
         data &&
         <>
           <div className="header">
-            <h1 className="appTitle">{ data.name }</h1>
+            <div style={{ display: "flex", alignItems: "center"}}>
+              <img src={ logo } alt="logo" style={{ height: 20, width: 22, marginRight: 7 }} />
+              <h1 className="appTitle">{ data.name }</h1>
+            </div>
             <Progress total={ data.steps.length } currentIndex={ data.maxCount || 0 } width={`calc(100vw - 500px)`} />
             <div className='countdown-wrapper'>
               {

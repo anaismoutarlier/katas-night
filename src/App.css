@@ -140,7 +140,9 @@ h4 {
 .wrapper {
   margin: 1em;
   height: auto;
-  min-height: 100px;
+  min-height: 140px;
+  width: auto;
+  min-width: 140px;
 }
 
 .team-card {
@@ -157,7 +159,7 @@ h4 {
   position: relative;
   left: auto;
   top: auto;
-  transition: transform 1s;
+  transition: transform 0.7s;
   border-radius: 3px;
   background-color: #f8f9fa;
 }
@@ -213,8 +215,8 @@ h4 {
 
 .team-card.winner.new {
   position: absolute;
-  transform: scale(3);
-  left: 45vw;
+  transform: scale(2.6);
+  left: 40vw;
   top: 30vh;
   z-index: 100;
   background-color: #f8f9fa;
@@ -230,8 +232,14 @@ h4 {
   background-color: rgba(152, 237, 196, 0.3);
 }
 
+.team-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .exercise-wrapper {
   text-align: center;
+  font-weight: 600;
 }
 
 .anchor {
