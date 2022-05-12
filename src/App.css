@@ -26,21 +26,23 @@ h4 {
 }
 
 .appTitle {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: white;
 }
 
 .header {
-  padding: 5px 5px 0px 10px;
+  padding: 5px 5px 0px 5px;
   display: flex;
+  width: 100%;
+  max-width: 100%;
   align-items: center;
   justify-content: space-between;
 }
 
 .progress {
   display: flex;
-  margin: 0px 20px;
+  margin: 0px;
   justify-content: center;
 }
 
@@ -115,7 +117,7 @@ h4 {
   display: grid;
   grid-template-rows: 40px 1fr;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
-  max-width: 94vw;
+  max-width: 92vw;
   min-width: fit-content;
   margin: 1em;
 }
@@ -138,7 +140,7 @@ h4 {
 }
 
 .wrapper {
-  margin: 1em;
+  margin: 0.7em;
   height: auto;
   min-height: 140px;
   width: auto;
@@ -149,7 +151,7 @@ h4 {
   box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px 0px;
   padding: 1.2% 1.2em;
   display: flex;
-  max-width: 12vw;
+  max-width: 16vw;
   min-width: 140px;
   max-height: 200px;
   flex-direction: column;
@@ -162,6 +164,7 @@ h4 {
   transition: transform 0.7s;
   border-radius: 3px;
   background-color: #f8f9fa;
+  border: 3px solid transparent;
 }
 
 .team-card.winner {
