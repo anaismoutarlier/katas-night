@@ -58,6 +58,7 @@ export default function Leaderboard() {
             winnersList = res.leading.filter(team => team.count === res.steps.length)
           }
         } else {
+          setWinners([res.leading[0]])
           if (interval) clearInterval(interval)
         }
       }
@@ -83,14 +84,14 @@ export default function Leaderboard() {
         <>
           <div className="header">
             <div style={{ display: "flex", alignItems: "center"}}>
-              <img src={ logo } alt="logo" style={{ height: 20, width: 22, marginRight: 7 }} />
+              <img src={ logo } alt="logo" style={{ height: 25, width: 28, marginRight: 7 }} />
               <h1 className="appTitle">{ data.name }</h1>
             </div>
-            <Progress total={ data.steps.length } currentIndex={ data.maxCount || 0 } width={`calc(100vw - 500px)`} />
-            <div className='countdown-wrapper'>
+            <Progress total={ data.steps.length } currentIndex={ data.maxCount || 0 } width={`calc(100vw - ${gameOngoing ? 600 : 520}px)`} />
+            <div className='countdown-wrapper' style={{ width: gameOngoing ? 270 : 180}}>
               {
                 gameOngoing && endDate &&
-                <Countdown date={ endDate } onStop={endGame} onComplete={endGame} renderer={ ({formatted: { hours, minutes, seconds }}) => <div className='countdown' style={ { color: minutes <= 5 ? "#f94a56": "#f8f9fa" } }>{hours}:{minutes}:{seconds}</div>} />
+                <Countdown date={ endDate } onStop={endGame} onComplete={endGame} renderer={ ({formatted: { hours, minutes, seconds }}) => <div className='countdown' style={ { color: minutes < 5 ? "#f94a56": "#f8f9fa" } }>{hours}:{minutes}:{seconds}</div>} />
               }
               <div className={`anchor${endDate && gameOngoing === false ? " open" : ""}`}>
                 <div className='alarm'>
@@ -98,6 +99,12 @@ export default function Leaderboard() {
                   <h1 className='alarm-banner'>STOP CHRONO !</h1>
                 </div>
               </div>
+              {
+                gameOngoing === null &&
+                <div className='countdown' style={{ display: "flex", justifyContent: "center", width: '150px', border: `2px solid ${data.maxCount === data.steps.length ? "#F8B64C" : data.maxCount > Math.floor(data.steps.length * 0.75) ? "#98edc4" : data.maxCount < data.steps.length / 2 ? "#f94a56" : "white"}` }}>
+                  <h1 className="appTitle" style={{ fontWeight: "5rem", color: data.maxCount === data.steps.length ? "#F8B64C" : data.maxCount > Math.floor(data.steps.length * 0.75) ? "#98edc4" : data.maxCount < data.steps.length / 2 ? "#f94a56" : "white" }}>{ data.maxCount } / { data.steps.length }</h1>
+                </div>
+              }
             </div>
           </div>
           <div className="board">

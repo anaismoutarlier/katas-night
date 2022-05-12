@@ -35,7 +35,10 @@ export default function Team({ team, data, winners, isWinner, gameOngoing }) {
           <h4>{ team.team }</h4>
           <div className='content-container'>
             {
-              team.students.map(student => <img className="avatar" key={student._id} alt={student.name} src={ student.avatar ? `https://ariane.lacapsule.academy/images/avatar/${student._id}.jpg` : `https://ariane.lacapsule.academy/images/avatar/_male-default.jpg` }/>)
+              [ ...team.students].map(({ name }) => name).sort().map((el, i) => {
+                let student = team.students.find(e => e.name === el)
+                return <img className="avatar" key={student._id} alt={student.name} src={ student.avatar ? `https://ariane.lacapsule.academy/images/avatar/${student._id}.jpg` : `https://ariane.lacapsule.academy/images/avatar/_male-default.jpg` }/>
+            })
             }
           </div>
         </div>
