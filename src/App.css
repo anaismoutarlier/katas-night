@@ -39,6 +39,9 @@ h4 {
   max-width: 100%;
   align-items: flex-start;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  left: 0;
 }
 
 .progress {
