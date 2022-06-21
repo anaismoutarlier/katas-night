@@ -1,9 +1,7 @@
-import React from 'react'
-
 import Team from './Team'
 
-export default function Campus({ campus, data, winners, isWinner, gameOngoing }) {
-  console.log({ winners })
+export default function Campus({ campus, ...props }) {
+
   return (
     <div className="campus-card">
       <div className="campus-header">
@@ -11,7 +9,7 @@ export default function Campus({ campus, data, winners, isWinner, gameOngoing })
       </div>
       <div className="campus-body">
         {
-          campus.teams.map(team => <Team key={ team.team } team={team} gameOngoing={gameOngoing} data={data} winners={winners} isWinner={isWinner}/>)
+          campus.teams.map(team => <Team key={ team.team } team={team} { ...props }/>)
         }
       </div>
     </div>

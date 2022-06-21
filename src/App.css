@@ -65,12 +65,21 @@ h4 {
   height: 28px;
   border-radius: 50px;
   border: 4px solid #f8f9fa;
-  transition: border-color 0.5s;
+  transition: border-color 0.5s ease-in;
 }
 
-.progress-outer.active {
+.progress-outer.active.green {
   border-color: #98edc4;
 }
+
+.progress-outer.active.red {
+  border-color: rgb(249, 82, 94);
+}
+
+.progress-outer.active.yellow {
+  border-color: #F8B64C;
+}
+
 
 .progress-inner {
   margin: 4px;
@@ -78,21 +87,37 @@ h4 {
   width: 12px;
   border-radius: 50px;
   background-color: #f8f9fa;
-  transition: background-color 0.5s;
+  transition: background-color 0.5s ease-in;
 }
 
-.progress-inner.active, .progress-bar.active {
+.progress-inner.active.green, .progress-bar.active.green {
   background-color: #98edc4;
+}
+
+.progress-inner.active.red, .progress-bar.active.red {
+  background-color: rgb(249, 82, 94);
+}
+
+.progress-inner.active.yellow, .progress-bar.active.yellow {
+  background-color: #F8B64C;
 }
 
 .progress-bar {
   background: #f8f9fa;
   height: 4px;
-  transition: background 0.5s;
+  transition: background 0.5s ease-in;
 }
 
-.progress-bar.partial {
-  background: linear-gradient(90deg, rgba(152,237,196,1) 0%, rgba(248,249,250,1) 87%);
+.progress-bar.partial.green {
+  background: linear-gradient(90deg, rgba(152,237,196,1) 40%, rgba(248,249,250,1) 95%);
+}
+
+.progress-bar.partial.red {
+  background: linear-gradient(90deg, rgb(249, 82, 94) 40%, rgba(248,249,250,1) 95%);
+}
+
+.progress-bar.partial.yellow {
+  background: linear-gradient(90deg, rgba(248, 182, 76, 1) 40%, rgba(248,249,250,1) 95%);
 }
 
 .countdown-wrapper {
@@ -149,6 +174,7 @@ h4 {
   min-height: 140px;
   width: auto;
   min-width: 140px;
+  box-sizing: content-box;
 }
 
 .team-card {
@@ -218,20 +244,20 @@ h4 {
 
 .team-card.winner {
   border: 3px solid #F8B64C;
+  background: linear-gradient(rgba(248, 182, 76, 0.3), rgba(248, 182, 76, 0.3)), linear-gradient(#ffffff, #ffffff);
 }
 
 .team-card.winner.new {
-  position: absolute;
+  /* position: absolute; */
   transform: scale(2.6);
-  left: 40vw;
-  top: 30vh;
+  /* left: 40vw;
+  top: 30vh; */
   z-index: 100;
-  background-color: #f8f9fa;
 }
 
 .team-card.cheater {
   border: 3px solid #f94a56;
-  background-color: rgba(249, 74, 86, 0.3);
+  background-color: rgb(249, 82, 94, 0.3);
 }
 
 .team-card.leader {
@@ -247,6 +273,7 @@ h4 {
 .exercise-wrapper {
   text-align: center;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .anchor {
@@ -295,4 +322,8 @@ h4 {
   to {
     transform: rotate(360deg);
   }
+}
+
+.team-header > h4 {
+  white-space: nowrap;
 }

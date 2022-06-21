@@ -91,7 +91,7 @@ export default function Leaderboard() {
             <div className='countdown-wrapper' style={{ width: gameOngoing ? 270 : 180}}>
               {
                 gameOngoing && endDate &&
-                <Countdown date={ endDate } onStop={endGame} onComplete={endGame} renderer={ ({formatted: { hours, minutes, seconds }}) => <div className='countdown' style={ { color: minutes < 5 ? "#f94a56": "#f8f9fa" } }>{hours}:{minutes}:{seconds}</div>} />
+                <Countdown date={ endDate } onStop={endGame} onComplete={endGame} renderer={ ({formatted: { hours, minutes, seconds }}) => <div className='countdown' style={ { color: hours < 1 && minutes < 5 ? "#f94a56": "#f8f9fa" } }>{hours}:{minutes}:{seconds}</div>} />
               }
               <div className={`anchor${endDate && gameOngoing === false ? " open" : ""}`}>
                 <div className='alarm'>
