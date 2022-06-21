@@ -23,13 +23,6 @@ export default function Team({ team, data, winners, isWinner, gameOngoing }) {
   if (won) status = " winner new"
   if (isCheater) status = " cheater"
 
-  let error;
-  if (isCheater) {
-    console.log(isCheater.count)
-    error = isCheater.skipped.map(step => `${step}, `).join("").split("")
-    error = error.slice(0, error.length - 2)
-    error.join("")
-  }
   return (
     <div className='wrapper' style={ dimensions }>
       <div className={`team-card${status}`} ref={ ref => ref = cardRef }>
@@ -41,7 +34,7 @@ export default function Team({ team, data, winners, isWinner, gameOngoing }) {
           </>
         }
         <div className="team-header">
-          <h4 dangerouslySetInnerHTML={ { __html: team.team }} />
+          <h4 dangerouslySetInnerHTML={ { __html: team.team } } />
           <div className='content-container'>
             {
               team.students.sort((a,b) => a.name.charCodeAt(0) - b.name.charCodeAt(0)).map(student => <img className="avatar" key={student._id} alt={student.name} src={ student.avatar ? `https://ariane.lacapsule.academy/images/avatar/${student._id}.jpg` : `https://ariane.lacapsule.academy/images/avatar/_male-default.jpg` }/>)
@@ -54,9 +47,14 @@ export default function Team({ team, data, winners, isWinner, gameOngoing }) {
         <div className='exercise-wrapper'>
           {
             isCheater ?
-            <><span style={{ color: '#f94a56' }}><span style={{ fontWeight: 900 }}>ERROR 404:</span> { error }</span></>
+            <>
+              <p style={{ color: '#f94a56', fontWeight: 900, margin: 0 }}>ERROR 404:</p>
+              {
+                isCheater.skipped.map(step => <p key={step} style={{ color: '#f94a56', margin: 0 }}>{step}</p>)
+              }
+            </>
             :
-            <><span style={{ color: winner ? '#F8B64C' : "#000000", fontWeight: 900 }}>{ team.lastExercise }</span></>
+            <p style={{ color: winner ? '#F8B64C' : "#000000", fontWeight: 900, margin: 0 }}>{ team.lastExercise }</p>
           }
         </div>
       </div>
