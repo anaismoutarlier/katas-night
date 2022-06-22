@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 import Countdown from 'react-countdown'
 
@@ -14,16 +14,20 @@ export default function Leaderboard() {
   const [winners, setWinners] = useState([])
   const [isWinner, setIsWinner] = useState(null)
   const [endDate, setEndDate] = useState(null)
+  const [startDate, setStartDate] = useState(null)
   const [gameOngoing, setGameOngoing] = useState(null)
   
   const { batchId } = useParams()
-  const navigate = useNavigate()
   
   useEffect(() => {
     let interval;
 
     let winnersList = [];
     const fetchData = async () => {
+      let now = new Date()
+
+      if(startDate && now < startDate) return
+
       const data = await fetch(`https://ariane-backend.herokuapp.com/batch/katas/progress/${batchId}`)
       const json = await data.json()
 
@@ -33,14 +37,14 @@ export default function Leaderboard() {
         
         let start = new Date(dateStart)
         let end = new Date(dateEnd)
-        let now = new Date()
+
+        setData(res)
 
         if (start > now) {
-          navigate(`/start/${batchId}`)
+          setStartDate(start)
           return
         }
         
-        setData(res)
         setWinners(res.all.filter(team => team.count === res.steps.length))
         if (end > now) {
           setGameOngoing(true)
@@ -68,7 +72,7 @@ export default function Leaderboard() {
     interval = setInterval(() => fetchData(), 7000)
 
     return  () => interval ? clearInterval(interval) : null
-  }, [batchId])
+  }, [batchId, startDate])
 
   const endGame = async () => {
     await fetch(`https://ariane-backend.herokuapp.com/batch/katas/end/${batchId}`, {
@@ -100,7 +104,7 @@ export default function Leaderboard() {
                 </div>
               </div>
               {
-                gameOngoing === null &&
+                gameOngoing === null && startDate < new Date() &&
                 <div className='countdown' style={{ display: "flex", justifyContent: "center", width: '150px', border: `2px solid ${data.maxCount === data.steps.length ? "#F8B64C" : data.maxCount > Math.floor(data.steps.length * 0.75) ? "#98edc4" : data.maxCount < data.steps.length / 2 ? "#f94a56" : "white"}` }}>
                   <h1 className="appTitle" style={{ fontWeight: "5rem", color: data.maxCount === data.steps.length ? "#F8B64C" : data.maxCount > Math.floor(data.steps.length * 0.75) ? "#98edc4" : data.maxCount < data.steps.length / 2 ? "#f94a56" : "white" }}>{ data.maxCount } / { data.steps.length }</h1>
                 </div>
