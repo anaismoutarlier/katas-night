@@ -37,7 +37,7 @@ export default function Team({ team, data, winners, isWinner, gameOngoing }) {
           <h4 dangerouslySetInnerHTML={ { __html: team.team } } />
           <div className='content-container'>
             {
-              team.students.sort((a,b) => a.name.charCodeAt(0) - b.name.charCodeAt(0)).map(student => <img className="avatar" key={student._id} alt={student.name} src={ student.avatar ? `https://ariane.lacapsule.academy/images/avatar/${student._id}.jpg` : `https://ariane.lacapsule.academy/images/avatar/_male-default.jpg` }/>)
+              team.students.sort((a,b) => a.name.charCodeAt(0) - b.name.charCodeAt(0)).map(student => <img className="avatar" key={student._id} title={ student.name } alt={student.name} src={ student.avatar ? `https://ariane.lacapsule.academy/images/avatar/${student._id}.jpg` : `https://ariane.lacapsule.academy/images/avatar/_male-default.jpg` }/>)
             }
           </div>
         </div>
