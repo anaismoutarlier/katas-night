@@ -28,7 +28,7 @@ export default function Leaderboard() {
 
       if(startDate && now < startDate) return
 
-      const data = await fetch(`https://ariane-backend.herokuapp.com/batch/katas/progress/${batchId}`)
+      const data = await fetch(`https://ariane-backend-test.herokuapp.com/batch/katas/progress/${batchId}`)
       const json = await data.json()
 
       const { result, dateStart, dateEnd, ...res } = json
