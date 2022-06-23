@@ -149,6 +149,7 @@ h4 {
   max-width: 92vw;
   min-width: fit-content;
   margin: 1em;
+  transform: scale(0.87);
 }
 
 .campus-header {
